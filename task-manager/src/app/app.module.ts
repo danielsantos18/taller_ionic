@@ -8,6 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponentModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { TaskComponentModule } from './task/task.module';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileModule } from './profile/profile.module';
+import { ProfileRoutingModule } from './profile/profile-routing.module';
 
 @NgModule({
   declarations: [AppComponent],  // Solo el AppComponent aquí
@@ -18,7 +21,9 @@ import { TaskComponentModule } from './task/task.module';
     IonicModule,
     SharedModule,  // Módulo compartido que contiene Header y Footer
     HomeComponentModule,  // Módulo para HomeComponent
-    TaskComponentModule
+    ProfileModule,
+    TaskComponentModule,
+    ProfileRoutingModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
