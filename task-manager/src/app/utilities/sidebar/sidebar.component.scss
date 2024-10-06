@@ -1,0 +1,33 @@
+ion-menu {
+    background: #f8f8f8;
+    /* Color de fondo del menú */
+}
+
+ion-item {
+    --background: transparent;
+    /* Fondo transparente para los elementos */
+}
+
+ion-item:hover {
+    --background: #e0e0e0;
+    /* Color al pasar el mouse */
+}
+
+.user-avatar {
+    width: 60px;
+    /* Tamaño ajustado */
+    height: 60px;
+    border-radius: 50%;
+    /* Hace que la imagen sea redonda */
+    margin-right: 16px;
+    /* Espacio entre la imagen y el texto */
+    border: 2px solid white;
+    /* Borde blanco alrededor de la imagen */
+}
+
+.user-name {
+    font-size: 1.2rem;
+    /* Tamaño de la fuente */
+    margin: 0;
+    /* Quitar márgenes */
+}
