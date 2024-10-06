@@ -5,8 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPageRoutingModule } from './login-routing.module';
-
-import { LoginPage } from './login.page';
+import { LoginComponent } from './login.component';
 import { InputModule } from '../components/input/input.module';
 
 @NgModule({
@@ -17,6 +16,6 @@ import { InputModule } from '../components/input/input.module';
     InputModule,
     LoginPageRoutingModule
   ],
-  declarations: [LoginPage]
+  declarations: [LoginComponent]
 })
-export class LoginPageModule {}
+export class LoginPageModule { }
