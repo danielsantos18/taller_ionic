@@ -1,21 +1,18 @@
 .app-header {
-    background-color: #000 !important; /* Asegúrate de que el fondo sea negro */
+    background-color: #000 !important;
 }
 
 .app-header h2 {
-    color: #28282B; /* Color del texto del logo */
+    color: #28282B;
+    /* Color del texto del logo */
 }
 
 .app-header-navbar ion-button {
-    color: #000; /* Cambiar color de los enlaces a blanco */
+    color: #000;
+    /* Cambiar color de los enlaces a blanco */
 }
 
 .app-header-navbar ion-button:hover {
-    color: #28282B; /* Cambiar color al pasar el mouse */
-}
-
-/* Si usas dropdown, puedes necesitar ajustar el color aquí */
-.dropdown-content {
-    background-color: #000; /* Cambiar el fondo del dropdown si es necesario */
-    color: #28282B; /* Color del texto del dropdown */
+    color: #28282B;
+    /* Cambiar color al pasar el mouse */
 }

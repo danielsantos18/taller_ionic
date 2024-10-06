@@ -6,19 +6,17 @@
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
+      <ion-content class="menu-content">
         <div class="user-info">
-          <i class="fas fa-user-circle"></i>
+          <i class="fas fa-user-circle user-icon"></i>
           <!--<img src="path/to/your/image.jpg" alt="User Avatar" class="user-avatar" />-->
           <h2 class="user-name">Nombre del Usuario</h2>
         </div>
         <ion-list>
-          <ion-item routerLink="/dashboard/stats">My tasks</ion-item>
-          <ion-item (click)="logout()">Logout</ion-item>
+          <ion-item routerLink="/dashboard/stats" class="menu-item">My tasks</ion-item>
+          <ion-item class="menu-item" (click)="logout()">Logout</ion-item>
         </ion-list>
       </ion-content>
     </ion-menu>
-    <ion-content id="main-content">
-    </ion-content>
   </ion-split-pane>
 </ion-app>

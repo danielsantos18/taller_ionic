@@ -6,19 +6,19 @@ import { SidebarComponent } from '../utilities/sidebar/sidebar.component';
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent
-  ],
-  imports: [
-    CommonModule,
-    IonicModule
-  ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent,
-  ]
+    declarations: [
+        HeaderComponent,
+        FooterComponent,
+        SidebarComponent
+    ],
+    imports: [
+        CommonModule,
+        IonicModule
+    ],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        SidebarComponent,
+    ]
 })
 export class SharedModule { }
