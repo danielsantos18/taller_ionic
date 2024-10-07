@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -6,12 +7,17 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  ngOnInit() {
+export class HeaderComponent implements OnInit {
 
+  constructor(private router: Router) { }
+
+  ngOnInit() { }
+
+  goToProfile() {
+    this.router.navigate(['/profile']);
   }
 
-  ngOnDestroy() {
-
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 }

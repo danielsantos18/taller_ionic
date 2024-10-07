@@ -54,6 +54,7 @@ ion-list {
 
 .menu-item {
     transition: 0.2s all ease;
+    cursor: pointer;
     /* Transiciones suaves para los elementos del menú */
 }
 
@@ -61,5 +62,6 @@ ion-list {
     background-color: #000000;
     /* Color de fondo al hacer hover */
     color: #0db3d0;
+    transform: scale(1.1);
     /* Color del texto al hacer hover */
 }

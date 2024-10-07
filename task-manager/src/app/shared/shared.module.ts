@@ -4,6 +4,7 @@ import { HeaderComponent } from '../utilities/header/header.component';
 import { FooterComponent } from '../utilities/footer/footer.component';
 import { SidebarComponent } from '../utilities/sidebar/sidebar.component';
 import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -13,12 +14,13 @@ import { IonicModule } from '@ionic/angular';
     ],
     imports: [
         CommonModule,
-        IonicModule
+        IonicModule,
+        FormsModule
     ],
     exports: [
         HeaderComponent,
         FooterComponent,
-        SidebarComponent,
+        SidebarComponent
     ]
 })
 export class SharedModule { }
