@@ -6,6 +6,7 @@ import { SidebarComponent } from '../utilities/sidebar/sidebar.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
+
 @NgModule({
     declarations: [
         HeaderComponent,

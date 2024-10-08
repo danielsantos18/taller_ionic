@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="primary">
+      <ion-button color="primary" (click)="router.navigate(['/'])">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -13,16 +13,42 @@
 
 <ion-content>
   <div id="header">
-
     <h1>Login</h1>
     <img
-      src="https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg">
+      src="https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg"
+      alt="User Icon">
   </div>
 
-  <form id="form">
-    <app-input placeholder="Email"></app-input>
-    <app-input type="Password" placeholder="Password"></app-input>
-    <ion-button expand="block" shape="round">Login</ion-button>
-  </form>
+  <form (ngSubmit)="loginWithEmail()" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="email">Correo Electrónico:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        class="form-control"
+      />
+    </div>
 
+    <div class="form-group">
+      <label for="password">Contraseña:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    <ion-button expand="block" shape="round" (click)="loginWithGoogle()">
+      <ion-icon slot="start" name="logo-google"></ion-icon> Iniciar sesión con Google
+    </ion-button>
+  </form>
 </ion-content>

@@ -6,27 +6,35 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponentModule } from './home/home.module';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './shared/shared.module';  
 import { TaskComponentModule } from './task/task.module';
-import { ProfileComponent } from './profile/profile.component';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileRoutingModule } from './profile/profile-routing.module';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';  
+import { environment } from '../environments/environment';
+
 
 @NgModule({
-  declarations: [AppComponent],  // Solo el AppComponent aquí
+  declarations: [AppComponent],  
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    IonicModule,
-    SharedModule,  // Módulo compartido que contiene Header y Footer
-    HomeComponentModule,  // Módulo para HomeComponent
+    SharedModule,  
+    HomeComponentModule,  
     ProfileModule,
     TaskComponentModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
+    
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideFirebaseApp(() => initializeApp(environment.FIREBASE_CONFING)),  // Inicializamos Firebase
+    provideAuth(() => getAuth()),  
+    provideFirestore(() => getFirestore())  // Proveemos Firestore
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
-
