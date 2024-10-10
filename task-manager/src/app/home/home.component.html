@@ -4,13 +4,10 @@
   <ion-split-pane contentId="main-content">
     <app-sidebar></app-sidebar> <!-- Sidebar -->
     <ion-content id="main-content">
-      <div *ngIf="user; else loginPrompt">
-        <h1>Bienvenido, {{ user.displayName }}</h1>
-        <app-task></app-task>
+      <div>
+        <h1>Bienvenido, {{ user.name }}</h1>
       </div>
-      <ng-template #loginPrompt>
-        <h2>Por favor, inicia sesión para ver tus tareas.</h2>
-      </ng-template>
+       <app-task></app-task>
     </ion-content>
   </ion-split-pane>
 </ion-content>

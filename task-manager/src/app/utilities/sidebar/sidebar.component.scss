@@ -13,6 +13,7 @@ ion-menu {
 }
 
 .user-info {
+    margin-top: 15px;
     text-align: center;
     /* Centra el texto dentro del div */
     margin-bottom: 20px;
@@ -64,4 +65,23 @@ ion-list {
     color: #0db3d0;
     transform: scale(1.1);
     /* Color del texto al hacer hover */
+}
+
+.profile-image {
+    width: 100px;
+    /* Ancho de la imagen */
+    height: 100px;
+    /* Alto de la imagen */
+    border-radius: 50%;
+    /* Hacer la imagen redonda */
+    border: 2px solid #4CAF50;
+    /* Color del borde */
+    object-fit: cover;
+    /* Asegura que la imagen se ajuste sin distorsionarse */
+    margin: 0 auto;
+    /* Centrar la imagen si es necesario */
+    display: block;
+    /* Asegura que la imagen sea un bloque */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra sutil */
 }

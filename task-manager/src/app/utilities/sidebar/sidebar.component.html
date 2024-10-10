@@ -8,12 +8,13 @@
       </ion-header>
       <ion-content class="menu-content">
         <div class="user-info">
-          <i class="fas fa-user-circle user-icon"></i>
-          <!--<img src="path/to/your/image.jpg" alt="User Avatar" class="user-avatar" />-->
-          <h2 class="user-name">Nombre del Usuario</h2>
+          <img *ngIf="imageUrl" [src]="imageUrl" alt="Imagen de perfil" class="profile-image" />
+          <div>
+            <h1>{{ user.name }}</h1>
+          </div>
         </div>
         <ion-list>
-          <ion-item routerLink="/dashboard/stats" class="menu-item">My tasks</ion-item>
+          <ion-item  (click)="goToTasks()" class="menu-item">My tasks</ion-item>
           <ion-item class="menu-item" (click)="logout()">Logout</ion-item>
         </ion-list>
       </ion-content>
