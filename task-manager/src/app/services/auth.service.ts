@@ -39,10 +39,10 @@ export class AuthService {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       const user = userCredential.user;
       const userDocRef = doc(this.firestore, `users/${user.uid}`);
-  
+
       // Asigna un valor predeterminado a image si es undefined
       const imageUrl = additionalData.image || null; // O puedes usar una URL de imagen por defecto
-  
+
       await setDoc(userDocRef, {
         email: user.email,
         name: additionalData.name,
@@ -52,9 +52,9 @@ export class AuthService {
         image: imageUrl, // Guarda el valor de la imagen
         createdAt: new Date(),
       });
-  
+
       console.log('Usuario registrado con éxito:', user);
-      
+
       return { uid: user.uid }; // Retorna el UID
     } catch (error) {
       const errorCode = (error as any).code;
@@ -63,7 +63,7 @@ export class AuthService {
       throw new Error(`Error ${errorCode}: ${errorMessage}`);
     }
   }
-  
+
 
   async getUserData(uid: string): Promise<any> {
     try {
@@ -101,11 +101,11 @@ export class AuthService {
   async updateUserData(uid: string, updatedData: any) {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`);
-      await setDoc(userDocRef, updatedData, { merge: true }); // Usamos merge para no sobrescribir otros campos
+      await setDoc(userDocRef, updatedData, { merge: true });
       console.log('Datos de usuario actualizados con éxito');
     } catch (error) {
       console.error('Error actualizando los datos del usuario:', error);
-      throw new Error('No se pudieron actualizar los datos del usuario.');
+      throw new Error('No se pudieron actualizar los datos del usuario:');
     }
   }
 

@@ -99,19 +99,37 @@ export class ProfileComponent implements OnInit {
   async updateProfile() {
     this.errorMessage = ''; // Reiniciar el mensaje de error
     try {
-      const uid = await this.authService.getCurrentUser(); // Obtiene el UID del usuario actual
+      const currentUser = this.authService.getCurrentUser(); // Obtiene el usuario actual
+      if (!currentUser) {
+        console.error('Usuario no autenticado.');
+        return;
+      }
+
+      const uid = currentUser.uid;
+      console.log('UID del usuario:', uid); // Verifica el UID
+
       // Subir la imagen si hay un archivo seleccionado
       if (this.selectedFile) {
         this.image = await this.uploadFile(this.selectedFile);
       }
 
+      // Obtener los datos actuales del usuario
+      const currentUserData = await this.authService.getUserData(uid);
+
+      // Crear un objeto para la actualización
+      const updatedData: any = {};
+
+      // Solo agregar las propiedades que tienen nuevos valores
+      if (this.name) updatedData.name = this.name;
+      if (this.lastName) updatedData.lastName = this.lastName;
+      if (this.age !== null && this.age !== undefined) updatedData.age = this.age;
+      if (this.phone) updatedData.phone = this.phone;
+      if (this.image) updatedData.image = this.image; // La URL de la imagen subida
+
       // Actualizar el usuario con los nuevos datos
       await this.authService.updateUserData(uid, {
-        name: this.name,
-        lastName: this.lastName,
-        age: this.age,
-        phone: this.phone,
-        image: this.image, // La URL de la imagen subida
+        ...currentUserData, // Combina los datos actuales
+        ...updatedData // Solo actualiza los datos nuevos
       });
 
       console.log('Perfil actualizado exitosamente');
@@ -121,6 +139,8 @@ export class ProfileComponent implements OnInit {
       console.error('Error al actualizar el perfil:', this.errorMessage);
     }
   }
+
+
 
   isFieldEditable(field: string): boolean {
     return this.editableFields[field];
