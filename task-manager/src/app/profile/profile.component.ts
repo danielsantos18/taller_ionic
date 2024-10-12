@@ -104,41 +104,40 @@ export class ProfileComponent implements OnInit {
         console.error('Usuario no autenticado.');
         return;
       }
-
+  
       const uid = currentUser.uid;
-      console.log('UID del usuario:', uid); // Verifica el UID
-
+  
       // Subir la imagen si hay un archivo seleccionado
       if (this.selectedFile) {
         this.image = await this.uploadFile(this.selectedFile);
       }
-
-      // Obtener los datos actuales del usuario
-      const currentUserData = await this.authService.getUserData(uid);
-
+  
       // Crear un objeto para la actualización
       const updatedData: any = {};
-
+  
       // Solo agregar las propiedades que tienen nuevos valores
-      if (this.name) updatedData.name = this.name;
-      if (this.lastName) updatedData.lastName = this.lastName;
-      if (this.age !== null && this.age !== undefined) updatedData.age = this.age;
-      if (this.phone) updatedData.phone = this.phone;
+      if (this.user.name) updatedData.name = this.user.name;
+      if (this.user.lastName) updatedData.lastName = this.user.lastName;
+      if (this.user.age !== null && this.user.age !== undefined) updatedData.age = this.user.age;
+      if (this.user.phone) updatedData.phone = this.user.phone;
       if (this.image) updatedData.image = this.image; // La URL de la imagen subida
-
+  
       // Actualizar el usuario con los nuevos datos
       await this.authService.updateUserData(uid, {
-        ...currentUserData, // Combina los datos actuales
+        ...this.user, // Combina los datos actuales
         ...updatedData // Solo actualiza los datos nuevos
       });
-
+  
+      // Actualiza la variable de usuario en el componente
+      this.user = { ...this.user, ...updatedData };
+  
       console.log('Perfil actualizado exitosamente');
-      // Aquí puedes agregar una notificación o redirección
     } catch (error: any) {
       this.errorMessage = error.code ? `Error ${error.code}: ${error.message}` : 'Error al actualizar el perfil';
       console.error('Error al actualizar el perfil:', this.errorMessage);
     }
   }
+  
 
 
 
