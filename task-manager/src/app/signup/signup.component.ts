@@ -3,6 +3,7 @@ import { Storage, uploadBytesResumable, getDownloadURL, ref } from '@angular/fir
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastController } from '@ionic/angular'; // Importa ToastController
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +11,6 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
-
   uploadProgess!: Observable<number>;
   downloadURL$!: Observable<string>;
 
@@ -25,12 +25,28 @@ export class SignupComponent {
   selectedFile!: File; // Archivo seleccionado
   isLoading: boolean = false; // Estado de carga
 
-  constructor(private authService: AuthService, private storage: Storage, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private storage: Storage,
+    private router: Router,
+    private toastController: ToastController // Inyecta ToastController
+  ) {}
+
+  // Método para mostrar notificaciones
+  private async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      position: 'top',
+      buttons: [{ text: 'Cerrar', role: 'cancel' }]
+    });
+    toast.present();
+  }
 
   // Método para manejar la selección de archivo
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log("Archivo seleccionado:", this.selectedFile);
+    this.showToast('Archivo seleccionado: ' + this.selectedFile.name); // Notificación al seleccionar archivo
   }
 
   // Método para subir el archivo
@@ -47,12 +63,13 @@ export class SignupComponent {
         },
         (error) => {
           console.error('Error al cargar el archivo:', error);
+          this.showToast('Error al cargar el archivo: ' + error.message); // Notificación de error
           reject(error);
         },
         async () => {
           console.log('¡Archivo subido con éxito!');
           const url = await getDownloadURL(fileRef);
-          console.log('URL del archivo:', url);
+          this.showToast('¡Archivo subido con éxito!'); // Notificación de éxito
           resolve(url); // Devuelve la URL
         }
       );
@@ -83,11 +100,12 @@ export class SignupComponent {
         image: this.image, // La URL de la imagen subida
       });
 
-      console.log('Registro exitoso');
+      this.showToast('Registro exitoso'); // Notificación de éxito
       this.router.navigate(['/login']);
     } catch (error: any) {
       this.errorMessage = error.code ? `Error ${error.code}: ${error.message}` : 'Error en el registro';
       console.error('Error en el registro:', this.errorMessage);
+      this.showToast(this.errorMessage); // Notificación de error
     } finally {
       this.isLoading = false; // Asegurarse de que loading se establece en false
     }

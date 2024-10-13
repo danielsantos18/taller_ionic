@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
-  // app-routing.module.ts
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeComponentModule)  // Asegúrate que coincide con el nombre exportado
+    loadChildren: () => import('./home/home.module').then(m => m.HomeComponentModule),
+    canActivate: [AuthGuard]  // Aplica el guard aquí
   },
-
   {
     path: '',
     redirectTo: 'home',
@@ -23,7 +23,8 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) // Asegúrate que sea 'ProfileModule'
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+    canActivate: [AuthGuard]  // Aplica el guard aquí
   }
 ];
 
