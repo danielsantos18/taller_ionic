@@ -52,7 +52,15 @@
           <input type="file" (change)="onFileSelected($event)" />
         </ion-item>
 
-        <ion-button expand="full" color="primary" (click)="updateProfile()">Guardar Cambios</ion-button>
+        <ion-button expand="full" color="primary" (click)="updateProfile()" [disabled]="isLoading">
+          Guardar Cambios
+        </ion-button>
+
+        <!-- Spinner -->
+        <ion-item *ngIf="isLoading">
+          <ion-label>Actualizando perfil...</ion-label>
+          <ion-spinner name="dots"></ion-spinner>
+        </ion-item>
       </ion-card-content>
     </ion-card>
   </div>

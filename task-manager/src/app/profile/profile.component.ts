@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
   email: string = '';
   errorMessage: string = '';
   selectedFile!: File; // Archivo seleccionado
+  isLoading: boolean = false; // Estado de carga
 
   constructor(private authService: AuthService, private storage: Storage) { }
 
@@ -64,7 +65,7 @@ export class ProfileComponent implements OnInit {
   }
 
   // Método para subir el archivo
-  uploadFile(file: File): Promise<string> {
+  async uploadFile(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const currentUser = this.authService.getCurrentUser(); // Obtener el usuario actual
       if (!currentUser) {
@@ -98,6 +99,7 @@ export class ProfileComponent implements OnInit {
   // Método para actualizar el perfil
   async updateProfile() {
     this.errorMessage = ''; // Reiniciar el mensaje de error
+    this.isLoading = true; // Iniciar el estado de carga
     try {
       const currentUser = this.authService.getCurrentUser(); // Obtiene el usuario actual
       if (!currentUser) {
@@ -135,11 +137,10 @@ export class ProfileComponent implements OnInit {
     } catch (error: any) {
       this.errorMessage = error.code ? `Error ${error.code}: ${error.message}` : 'Error al actualizar el perfil';
       console.error('Error al actualizar el perfil:', this.errorMessage);
+    } finally {
+      this.isLoading = false; // Finalizar el estado de carga
     }
   }
-  
-
-
 
   isFieldEditable(field: string): boolean {
     return this.editableFields[field];
@@ -151,10 +152,4 @@ export class ProfileComponent implements OnInit {
       this.imageUrl = null; // Reset the new image if editing is closed
     }
   }
-
 }
-
-
-
-
-

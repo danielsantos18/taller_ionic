@@ -11,8 +11,8 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
+  isLoading: boolean = false; // Estado de carga
 
-  // Cambia 'private' a 'public'
   constructor(public authService: AuthService, public router: Router) {}
 
   async loginWithEmail() {
@@ -22,6 +22,7 @@ export class LoginComponent {
       return;
     }
 
+    this.isLoading = true; // Establecer loading en true
     try {
       await this.authService.loginWithEmail(this.email, this.password);
       console.log('Usuario autenticado con email');
@@ -29,11 +30,14 @@ export class LoginComponent {
     } catch (error: any) {
       this.errorMessage = error.code ? `Error ${error.code}: ${error.message}` : 'Error en la autenticación';
       console.error('Error en la autenticación:', this.errorMessage);
+    } finally {
+      this.isLoading = false; // Asegurarse de que loading se establece en false
     }
   }
 
   async loginWithGoogle() {
     this.errorMessage = ''; // Reiniciar el mensaje de error
+    this.isLoading = true; // Establecer loading en true
     try {
       await this.authService.loginWithGoogle();
       console.log('Usuario autenticado con Google');
@@ -41,6 +45,8 @@ export class LoginComponent {
     } catch (error: any) {
       this.errorMessage = error.code ? `Error ${error.code}: ${error.message}` : 'Error en la autenticación';
       console.error('Error en la autenticación con Google:', this.errorMessage);
+    } finally {
+      this.isLoading = false; // Asegurarse de que loading se establece en false
     }
   }
 }

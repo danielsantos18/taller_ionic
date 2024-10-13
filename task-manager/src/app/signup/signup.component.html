@@ -50,6 +50,12 @@
 
     <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
 
-    <button type="submit" class="btn btn-primary">Registrarse</button>
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading">Registrarse</button>
+
+    <!-- Spinner -->
+    <ion-item *ngIf="isLoading">
+      <ion-label>Registrando...</ion-label>
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-item>
   </form>
 </div>

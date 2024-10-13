@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage, uploadBytesResumable, getDownloadURL, ref } from '@angular/fire/storage';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -22,8 +23,9 @@ export class SignupComponent {
   password: string = '';
   errorMessage: string = '';
   selectedFile!: File; // Archivo seleccionado
+  isLoading: boolean = false; // Estado de carga
 
-  constructor(private authService: AuthService, private storage: Storage) { }
+  constructor(private authService: AuthService, private storage: Storage, private router: Router) { }
 
   // Método para manejar la selección de archivo
   onFileSelected(event: any) {
@@ -34,7 +36,6 @@ export class SignupComponent {
   // Método para subir el archivo
   uploadFile(file: File, uid: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      // Cambia la ruta para incluir el UID del usuario
       const filePath = `files/${uid}/${file.name}`;
       const fileRef = ref(this.storage, filePath);
       const uploadTask = uploadBytesResumable(fileRef, file);
@@ -61,6 +62,8 @@ export class SignupComponent {
   // Método de registro
   async register() {
     this.errorMessage = ''; // Reiniciar el mensaje de error
+    this.isLoading = true; // Establecer loading en true
+
     try {
       // Registrar el usuario
       const { uid } = await this.authService.register(this.email, this.password, {
@@ -81,12 +84,12 @@ export class SignupComponent {
       });
 
       console.log('Registro exitoso');
-      // Aquí puedes agregar redirección o cualquier otra acción
+      this.router.navigate(['/login']);
     } catch (error: any) {
-      // Comprobar si el error tiene un código y un mensaje
       this.errorMessage = error.code ? `Error ${error.code}: ${error.message}` : 'Error en el registro';
       console.error('Error en el registro:', this.errorMessage);
+    } finally {
+      this.isLoading = false; // Asegurarse de que loading se establece en false
     }
   }
-
 }
