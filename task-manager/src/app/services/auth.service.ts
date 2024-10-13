@@ -9,7 +9,6 @@ import {
 } from '@angular/fire/auth';
 import { Firestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '@angular/fire/auth';
 import { IUser } from '../model/user.model';
 import { Storage, uploadBytesResumable, getDownloadURL, ref } from '@angular/fire/storage';
 

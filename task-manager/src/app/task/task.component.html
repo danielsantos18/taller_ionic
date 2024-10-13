@@ -1,35 +1,33 @@
-<ion-content>
-  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-label position="floating">Title</ion-label>
-      <ion-input formControlName="title"></ion-input>
-    </ion-item>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <ion-item>
+    <ion-label position="floating">Title</ion-label>
+    <ion-input formControlName="title"></ion-input>
+  </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Description</ion-label>
-      <ion-input formControlName="description"></ion-input>
-    </ion-item>
+  <ion-item>
+    <ion-label position="floating">Description</ion-label>
+    <ion-input formControlName="description"></ion-input>
+  </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Due Date</ion-label>
-      <ion-datetime display-format="YYYY-MM-DD" min="{{ today }}" formControlName="date"></ion-datetime>
-    </ion-item>
+  <ion-item>
+    <ion-label position="floating">Due Date</ion-label>
+    <ion-datetime display-format="YYYY-MM-DD" min="{{ today }}" formControlName="date"></ion-datetime>
+  </ion-item>
 
-    <ion-button expand="full" type="submit" [disabled]="taskForm.invalid">
-      {{ currentTaskId ? 'Update Task' : 'Create Task' }}
-    </ion-button>
-  </form>
+  <ion-button expand="full" type="submit" [disabled]="taskForm.invalid">
+    {{ currentTaskId ? 'Update Task' : 'Create Task' }}
+  </ion-button>
+</form>
 
-  <ion-list>
-    <ion-item *ngFor="let task of tasks">
-      <ion-label>
-        <h2>{{ task.title }}</h2>
-        <p>{{ task.description }}</p>
-        <p>Due Date: {{ task.date }}</p>
-        <p>Status: {{ task.done ? 'Done' : 'Pending' }}</p>
-      </ion-label>
-      <ion-button slot="end" (click)="editTask(task)">Edit</ion-button>
-      <ion-button slot="end" color="danger" (click)="deleteTask(task.id)">Delete</ion-button>
-    </ion-item>
-  </ion-list>
-</ion-content>
+<ion-list>
+  <ion-item *ngFor="let task of tasks">
+    <ion-label>
+      <h2>{{ task.title }}</h2>
+      <p>{{ task.description }}</p>
+      <p>Due Date: {{ task.date }}</p>
+      <p>Status: {{ task.done ? 'Done' : 'Pending' }}</p>
+    </ion-label>
+    <ion-button slot="end" (click)="editTask(task)">Edit</ion-button>
+    <ion-button slot="end" color="danger" (click)="deleteTask(task.id)">Delete</ion-button>
+  </ion-item>
+</ion-list>
