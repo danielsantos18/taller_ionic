@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage, uploadBytesResumable, getDownloadURL, ref } from '@angular/fire/storage';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
+import { ToastController } from '@ionic/angular'; // Importa ToastController
 
 @Component({
   selector: 'app-profile',
@@ -34,10 +35,21 @@ export class ProfileComponent implements OnInit {
   selectedFile!: File; // Archivo seleccionado
   isLoading: boolean = false; // Estado de carga
 
-  constructor(private authService: AuthService, private storage: Storage) { }
+  constructor(private authService: AuthService, private storage: Storage, private toastController: ToastController) { } // Inyecta ToastController
 
   ngOnInit() {
     this.loadUserData();
+  }
+
+  // Método para mostrar notificaciones
+  private async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      position: 'top',
+      buttons: [{ text: 'Cerrar', role: 'cancel' }]
+    });
+    toast.present();
   }
 
   // Método para cargar el perfil del usuario
@@ -84,12 +96,14 @@ export class ProfileComponent implements OnInit {
         },
         (error) => {
           console.error('Error al cargar el archivo:', error);
+          this.showToast('Error al cargar el archivo: ' + error.message); // Notificación de error
           reject(error);
         },
         async () => {
           console.log('¡Archivo subido con éxito!');
           const url = await getDownloadURL(fileRef);
           console.log('URL del archivo:', url);
+          this.showToast('¡Archivo subido con éxito!'); // Notificación de éxito
           resolve(url); // Devuelve la URL
         }
       );
@@ -104,6 +118,7 @@ export class ProfileComponent implements OnInit {
       const currentUser = this.authService.getCurrentUser(); // Obtiene el usuario actual
       if (!currentUser) {
         console.error('Usuario no autenticado.');
+        this.showToast('Usuario no autenticado.'); // Notificación de error
         return;
       }
   
@@ -134,9 +149,11 @@ export class ProfileComponent implements OnInit {
       this.user = { ...this.user, ...updatedData };
   
       console.log('Perfil actualizado exitosamente');
+      this.showToast('Perfil actualizado exitosamente'); // Notificación de éxito
     } catch (error: any) {
       this.errorMessage = error.code ? `Error ${error.code}: ${error.message}` : 'Error al actualizar el perfil';
       console.error('Error al actualizar el perfil:', this.errorMessage);
+      this.showToast(this.errorMessage); // Notificación de error
     } finally {
       this.isLoading = false; // Finalizar el estado de carga
     }
@@ -149,7 +166,7 @@ export class ProfileComponent implements OnInit {
   toggleEdit(field: string) {
     this.editableFields[field] = !this.editableFields[field];
     if (!this.editableFields[field]) {
-      this.imageUrl = null; // Reset the new image if editing is closed
+      this.imageUrl = null; // Restablecer la nueva imagen si se cierra la edición
     }
   }
 }

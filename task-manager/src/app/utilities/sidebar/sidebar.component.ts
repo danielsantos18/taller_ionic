@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastController } from '@ionic/angular'; // Importa ToastController
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +13,7 @@ export class SidebarComponent implements OnInit {
   user: any = {};
   imageUrl: string | null = null; // Variable para almacenar la URL de la imagen
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { } // Inyecta ToastController
 
   ngOnInit() {
     this.loadUserData();
@@ -23,6 +24,17 @@ export class SidebarComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  // Método para mostrar notificaciones
+  private async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      position: 'top',
+      buttons: [{ text: 'Cerrar', role: 'cancel' }]
+    });
+    toast.present();
   }
 
   async loadUserData() {
@@ -43,9 +55,15 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  logout() {
-    this.router.navigate(['/login']);
-    // Lógica de logout aquí
+  async logout() {
+    try {
+      await this.authService.logout(); // Asegúrate de tener un método de logout en tu AuthService
+      this.router.navigate(['/login']);
+      this.showToast('Sesión cerrada exitosamente'); // Notificación de éxito
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      this.showToast('Error al cerrar sesión: ' ); // Notificación de error
+    }
   }
 
   goToTasks() {
