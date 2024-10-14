@@ -12,8 +12,13 @@
 
 /* Animación de entrada */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* Estilo del encabezado */
@@ -43,7 +48,8 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin: 0 auto; /* Centrar el formulario */
+  margin: 0 auto;
+  /* Centrar el formulario */
 }
 
 /* Estilo de los campos de entrada */
@@ -61,7 +67,8 @@
 
 /* Efecto de focus para los campos de entrada */
 .form-control:focus {
-  border-color: #007bff; /* Color original */
+  border-color: #007bff;
+  /* Color original */
   outline: none;
 }
 
@@ -76,7 +83,8 @@
 .btn-primary {
   width: 100%;
   padding: 10px;
-  background-color: #007bff; /* Color original */
+  background-color: #007bff;
+  /* Color original */
   color: white;
   border: none;
   border-radius: 5px;
@@ -86,7 +94,8 @@
 
 /* Efecto de hover para el botón de registrarse */
 .btn-primary:hover {
-  background-color: #0056b3; /* Color original */
+  background-color: #0056b3;
+  /* Color original */
 }
 
 /* Asegurar que todo esté centrado */
@@ -95,4 +104,59 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+/* Estilos para el input de tipo file */
+input[type="file"] {
+  display: block;
+  /* Hace que el input ocupe una línea completa */
+  margin-top: 12px;
+  /* Espacio superior */
+  margin-bottom: 16px;
+  /* Espacio inferior */
+  padding: 8px;
+  /* Espacio interno */
+  border: 1px solid #ccc;
+  /* Borde gris */
+  border-radius: 4px;
+  /* Bordes redondeados */
+  width: 100%;
+  /* Ancho completo */
+  font-size: 1em;
+  /* Tamaño de fuente */
+  color: #555;
+  /* Color del texto */
+}
+
+input[type="file"]:focus {
+  border-color: #007bff;
+  /* Color del borde al enfocar */
+  outline: none;
+  /* Sin contorno */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  /* Sombra sutil al enfocar */
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background-color: #007bff;
+  /* Fondo del botón */
+  color: white;
+  /* Color del texto */
+  border: none;
+  /* Sin borde */
+  padding: 8px 12px;
+  /* Espacio interno */
+  border-radius: 4px;
+  /* Bordes redondeados */
+  cursor: pointer;
+  /* Cambia el cursor al pasar el ratón */
+  font-weight: bold;
+  /* Negrita */
+  transition: background-color 0.3s;
+  /* Transición suave para el color de fondo */
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #0056b3;
+  /* Color de fondo al hacer hover */
 }

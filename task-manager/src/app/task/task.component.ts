@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service'; 
+import { AuthService } from '../services/auth.service';
 import { Firestore, collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from '@angular/fire/firestore';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-task',
@@ -12,12 +13,15 @@ export class TaskComponent implements OnInit {
   taskForm: FormGroup;
   tasks: any[] = [];
   today: string = new Date().toISOString().split('T')[0];
-  currentTaskId: string | null = null; // Cambiado a string para Firestore ID
+  currentTaskId: string | null = null;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService, // Inyecta el servicio de autenticación
-    private firestore: Firestore // Inyecta Firestore
+    private authService: AuthService,
+    private firestore: Firestore,
+    private toastController: ToastController,
+    private alertController: AlertController
   ) {
     this.taskForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -28,25 +32,32 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadTasks(); // Cargar tareas al iniciar el componente
+    this.loadTasks();
   }
 
   async loadTasks() {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       const tasksRef = collection(this.firestore, 'tasks');
-      const q = query(tasksRef, where('uid', '==', currentUser.uid)); // Filtrar por el usuario autenticado
+      const q = query(tasksRef, where('uid', '==', currentUser.uid));
       const querySnapshot = await getDocs(q);
-      this.tasks = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); // Cargar tareas
+      this.tasks = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
   }
 
   async onSubmit() {
     if (this.taskForm.valid) {
-      if (this.currentTaskId) {
-        await this.updateTask(); // Actualiza la tarea si ya existe
-      } else {
-        await this.createTask(); // Crea una nueva tarea
+      this.loading = true;
+      try {
+        if (this.currentTaskId) {
+          await this.updateTask();
+          this.presentToast('Tarea actualizada exitosamente!');
+        } else {
+          await this.createTask();
+          this.presentToast('Tarea creada exitosamente!');
+        }
+      } finally {
+        this.loading = false;
       }
       this.taskForm.reset({ done: false });
     }
@@ -56,12 +67,11 @@ export class TaskComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       const newTask = {
-        uid: currentUser.uid, // Relaciona la tarea con el usuario autenticado
+        uid: currentUser.uid,
         ...this.taskForm.value,
       };
-      await addDoc(collection(this.firestore, 'tasks'), newTask); // Agrega la tarea a Firestore
-      this.loadTasks(); // Recarga las tareas
-      console.log('Task created: ', newTask);
+      await addDoc(collection(this.firestore, 'tasks'), newTask);
+      this.loadTasks();
     }
   }
 
@@ -78,17 +88,46 @@ export class TaskComponent implements OnInit {
   async updateTask() {
     if (this.currentTaskId) {
       const taskRef = doc(this.firestore, `tasks/${this.currentTaskId}`);
-      await updateDoc(taskRef, this.taskForm.value); // Actualiza la tarea en Firestore
+      await updateDoc(taskRef, this.taskForm.value);
       this.currentTaskId = null;
-      this.loadTasks(); // Recarga las tareas
-      console.log('Task updated');
+      this.loadTasks();
     }
   }
 
+  async confirmDeleteTask(id: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro de que deseas eliminar esta tarea?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.deleteTask(id);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   async deleteTask(id: string) {
-    const taskRef = doc(this.firestore, `tasks/${id}`);
-    await deleteDoc(taskRef); // Elimina la tarea de Firestore
-    this.loadTasks(); // Recarga las tareas
-    console.log('Task deleted, ID:', id);
+    await deleteDoc(doc(this.firestore, `tasks/${id}`));
+    this.loadTasks();
+    this.presentToast('Tarea eliminada exitosamente!');
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'top',
+    });
+    await toast.present();
   }
 }
