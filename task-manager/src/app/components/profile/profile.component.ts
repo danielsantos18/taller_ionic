@@ -12,7 +12,7 @@ import { ToastController } from '@ionic/angular'; // Importa ToastController
 export class ProfileComponent implements OnInit {
 
   editableFields: { [key: string]: boolean } = {
-    name: false,
+    name: false,  
     lastName: false,
     email: false,
     age: false,

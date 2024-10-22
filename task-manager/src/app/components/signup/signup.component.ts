@@ -90,7 +90,7 @@ export class SignupComponent {
         phone: this.phone,
       });
 
-      // Subir la imagen si hay un archivo seleccionado
+      // Subir la imagen si hay un archivo cseleccionado
       if (this.selectedFile) {
         this.image = await this.uploadFile(this.selectedFile, uid); // Usar el UID
       }

@@ -5,11 +5,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponentModule } from './home/home.module';
+import { HomeComponentModule } from './components/home/home.module';
 import { SharedModule } from './shared/shared.module';
-import { TaskComponentModule } from './task/task.module';
-import { ProfileModule } from './profile/profile.module';
-import { ProfileRoutingModule } from './profile/profile-routing.module';
+import { TaskComponentModule } from './components/task/task.module';
+import { ProfileModule } from './components/profile/profile.module';
+import { ProfileRoutingModule } from './components/profile/profile-routing.module';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore, } from '@angular/fire/firestore';

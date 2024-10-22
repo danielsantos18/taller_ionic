@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePageRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { SharedModule } from '../shared/shared.module'; // Asegúrate de que este módulo contenga Header y Footer
+import { SharedModule } from '../../shared/shared.module'; // Asegúrate de que este módulo contenga Header y Footer
 import { TaskComponentModule } from '../task/task.module';
 
 @NgModule({

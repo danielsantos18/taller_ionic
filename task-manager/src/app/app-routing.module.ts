@@ -5,7 +5,7 @@ import { AuthGuard } from './guard/auth.guard';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeComponentModule),
+    loadChildren: () => import('./components/home/home.module').then(m => m.HomeComponentModule),
     canActivate: [AuthGuard]  // Aplica el guard aquí
   },
   {
@@ -15,15 +15,15 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./components/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'signup',
-    loadChildren: () => import('./signup/signup.module').then(m => m.SignupPageModule)
+    loadChildren: () => import('./components/signup/signup.module').then(m => m.SignupPageModule)
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+    loadChildren: () => import('./components/profile/profile.module').then(m => m.ProfileModule),
     canActivate: [AuthGuard]  // Aplica el guard aquí
   }
 ];

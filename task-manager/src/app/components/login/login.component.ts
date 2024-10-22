@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ToastController } from '@ionic/angular'; // Importa ToastController
 
 @Component({
@@ -33,7 +33,7 @@ export class LoginComponent {
       this.errorMessage = 'Email o contraseña no pueden estar vacíos';
       this.showToast(this.errorMessage); // Mostrar notificación de error
       return;
-    }
+    } 
 
     this.isLoading = true; // Establecer loading en true
     try {
@@ -46,7 +46,7 @@ export class LoginComponent {
       console.error('Error en la autenticación:', this.errorMessage);
       this.showToast(this.errorMessage); // Mostrar notificación de error
     } finally {
-      this.isLoading = false; // Asegurarse de que loading se establece en false
+      this.isLoading = false; // Asegurarse de que loading se establece en false 
     }
   }
 
